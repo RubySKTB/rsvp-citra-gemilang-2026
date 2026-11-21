@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Sistem RSVP Digital - Majlis Citra Gemilang SK Tanjung Batu 2026</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,28 +17,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        emeraldDeep: '#043927',    /* Hijau Hutan Gelap */
-                        emeraldRich: '#065f46',    /* Hijau Zamrud */
-                        emeraldLight: '#ecfdf5',   /* Hijau Lembut Latar */
-                        creamBase: '#fdfbf7',      /* Krim Utama */
-                        creamDark: '#f5efe6',      /* Krim Sekunder */
-                        goldPrimary: '#c59b27',    /* Emas Utama */
-                        goldLight: '#f3e5ab',      /* Emas Cair */
-                        goldDark: '#9a7414',       /* Emas Gelap */
-                    },
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        serif: ['"Playfair Display"', 'serif'],
+        if (typeof tailwind !== 'undefined') {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            emeraldDeep: '#043927',    /* Hijau Hutan Gelap */
+                            emeraldRich: '#065f46',    /* Hijau Zamrud */
+                            emeraldLight: '#ecfdf5',   /* Hijau Lembut Latar */
+                            creamBase: '#fdfbf7',      /* Krim Utama */
+                            creamDark: '#f5efe6',      /* Krim Sekunder */
+                            goldPrimary: '#c59b27',    /* Emas Utama */
+                            goldLight: '#f3e5ab',      /* Emas Cair */
+                            goldDark: '#9a7414',       /* Emas Gelap */
+                        },
+                        fontFamily: {
+                            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                            serif: ['"Playfair Display"', 'serif'],
+                        }
                     }
                 }
-            }
+            };
         }
     </script>
     <style>
+        /* Jaminan kelas .hidden sentiasa berfungsi pada pelayar biasa tanpa bergantung pada CDN */
+        .hidden {
+            display: none !important;
+        }
         body {
             background-color: #fdfbf7;
             color: #1f2937;
@@ -81,7 +90,7 @@
     <!-- BAR NAVIGASI UTAMA -->
     <nav class="bg-emeraldDeep text-white shadow-md border-b-2 border-goldPrimary">
         <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-            <button type="button" onclick="navigateTo('portal')" class="flex items-center gap-2.5 text-left focus:outline-none group">
+            <button type="button" onclick="navigateTo('portal')" class="flex items-center gap-2.5 text-left focus:outline-none group cursor-pointer">
                 <div class="w-9 h-9 rounded-lg bg-goldPrimary/20 border border-goldPrimary flex items-center justify-center text-goldLight group-hover:bg-goldPrimary group-hover:text-emeraldDeep transition">
                     <i class="fa-solid fa-leaf text-lg"></i>
                 </div>
@@ -93,15 +102,15 @@
 
             <!-- Butang Navigasi Mod -->
             <div class="flex items-center gap-2 bg-black/25 p-1 rounded-xl border border-emeraldRich">
-                <button type="button" id="nav-portal" onclick="navigateTo('portal')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 bg-goldPrimary text-emeraldDeep shadow">
+                <button type="button" id="nav-portal" onclick="navigateTo('portal')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 bg-goldPrimary text-emeraldDeep shadow cursor-pointer">
                     <i class="fa-solid fa-envelope-open-text"></i>
                     <span>Portal Tetamu</span>
                 </button>
-                <button type="button" id="nav-urussetia" onclick="navigateTo('urussetia')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 text-creamBase hover:bg-white/10">
+                <button type="button" id="nav-urussetia" onclick="navigateTo('urussetia')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 text-creamBase hover:bg-white/10 cursor-pointer">
                     <i class="fa-solid fa-clipboard-list"></i>
                     <span>Urus Setia</span>
                 </button>
-                <button type="button" id="nav-admin" onclick="navigateTo('admin')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 text-creamBase hover:bg-white/10">
+                <button type="button" id="nav-admin" onclick="navigateTo('admin')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 text-creamBase hover:bg-white/10 cursor-pointer">
                     <i class="fa-solid fa-user-shield"></i>
                     <span>Admin</span>
                 </button>
@@ -127,7 +136,7 @@
                 >
             </div>
 
-            <!-- LANGKAH 1: PILIHAN KATEGORI TETAMU (4 KAD PILIHAN) -->
+            <!-- LANGKAH 1: PILIHAN KATEGORI TETAMU (4 KAD PILIHAN - KLIK TUNGGAL) -->
             <div id="category-selection-section" class="space-y-4 fade-in">
                 <div class="flex flex-wrap items-center justify-between gap-2">
                     <h2 class="text-base sm:text-xl font-bold text-emeraldDeep flex items-center gap-2">
@@ -139,55 +148,55 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                     <!-- Kad A: GURU -->
-                    <button type="button" onclick="openCategoryPage('GURU')" id="cat-card-GURU" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
-                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-emeraldDeep text-goldLight flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition">
+                    <button type="button" data-category="GURU" id="cat-card-GURU" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-emeraldDeep text-goldLight flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition pointer-events-none">
                             <i class="fa-solid fa-chalkboard-user"></i>
                         </div>
-                        <div class="flex-grow min-w-0">
+                        <div class="flex-grow min-w-0 pointer-events-none">
                             <span class="text-[11px] sm:text-xs font-bold text-goldDark uppercase tracking-wider block">Kategori A</span>
                             <h3 class="text-sm sm:text-lg font-extrabold text-emeraldDeep mt-0.5 leading-snug break-words">GURU</h3>
                             <p class="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">Barisan pendidik SK Tanjung Batu.</p>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0"></i>
+                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0 pointer-events-none"></i>
                     </button>
 
                     <!-- Kad B: AKP -->
-                    <button type="button" onclick="openCategoryPage('AKP')" id="cat-card-AKP" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
-                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-emeraldRich text-goldLight flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition">
+                    <button type="button" data-category="AKP" id="cat-card-AKP" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-emeraldRich text-goldLight flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition pointer-events-none">
                             <i class="fa-solid fa-users-gear"></i>
                         </div>
-                        <div class="flex-grow min-w-0">
+                        <div class="flex-grow min-w-0 pointer-events-none">
                             <span class="text-[11px] sm:text-xs font-bold text-goldDark uppercase tracking-wider block">Kategori B</span>
                             <h3 class="text-sm sm:text-lg font-extrabold text-emeraldDeep mt-0.5 leading-snug break-words">ANGGOTA KUMPULAN PELAKSANA (AKP)</h3>
                             <p class="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">Staf sokongan dan kakitangan sekolah.</p>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0"></i>
+                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0 pointer-events-none"></i>
                     </button>
 
                     <!-- Kad C: IBU BAPA / PENJAGA -->
-                    <button type="button" onclick="openCategoryPage('IBU_BAPA')" id="cat-card-IBU_BAPA" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
-                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-goldPrimary text-emeraldDeep flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition">
+                    <button type="button" data-category="IBU_BAPA" id="cat-card-IBU_BAPA" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-goldPrimary text-emeraldDeep flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition pointer-events-none">
                             <i class="fa-solid fa-award"></i>
                         </div>
-                        <div class="flex-grow min-w-0">
+                        <div class="flex-grow min-w-0 pointer-events-none">
                             <span class="text-[11px] sm:text-xs font-bold text-goldDark uppercase tracking-wider block">Kategori C</span>
                             <h3 class="text-sm sm:text-lg font-extrabold text-emeraldDeep mt-0.5 leading-snug break-words">IBU BAPA / PENJAGA PENERIMA ANUGERAH</h3>
                             <p class="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">Carian berdasarkan nama murid penerima anugerah.</p>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0"></i>
+                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0 pointer-events-none"></i>
                     </button>
 
                     <!-- Kad D: VIP / TETAMU JEMPUTAN -->
-                    <button type="button" onclick="openCategoryPage('VIP')" id="cat-card-VIP" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
-                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-emeraldDeep border border-goldPrimary text-goldLight flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition">
+                    <button type="button" data-category="VIP" id="cat-card-VIP" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-emeraldDeep border border-goldPrimary text-goldLight flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition pointer-events-none">
                             <i class="fa-solid fa-crown"></i>
                         </div>
-                        <div class="flex-grow min-w-0">
+                        <div class="flex-grow min-w-0 pointer-events-none">
                             <span class="text-[11px] sm:text-xs font-bold text-goldDark uppercase tracking-wider block">Kategori D</span>
                             <h3 class="text-sm sm:text-lg font-extrabold text-emeraldDeep mt-0.5 leading-snug break-words">VIP / TETAMU JEMPUTAN</h3>
                             <p class="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">Tetamu kehormat, PIBG dan jemputan khas.</p>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0"></i>
+                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0 pointer-events-none"></i>
                     </button>
                 </div>
             </div>
@@ -204,7 +213,7 @@
                             <h3 id="selected-category-title" class="text-base sm:text-xl font-extrabold text-emeraldDeep leading-tight"></h3>
                         </div>
                     </div>
-                    <button type="button" onclick="backToCategorySelection()" class="text-xs sm:text-sm font-bold text-emeraldDeep hover:text-white bg-emeraldLight hover:bg-emeraldDeep border border-emeraldRich/30 px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-xs">
+                    <button type="button" onclick="backToCategorySelection()" class="text-xs sm:text-sm font-bold text-emeraldDeep hover:text-white bg-emeraldLight hover:bg-emeraldDeep border border-emeraldRich/30 px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-xs cursor-pointer">
                         <i class="fa-solid fa-arrow-left"></i>
                         <span>Kembali ke Pilihan Kategori</span>
                     </button>
@@ -217,7 +226,7 @@
                             Cari Nama:
                         </label>
                         <span id="guest-count-badge" class="text-xs font-bold px-2.5 py-1 rounded-full bg-emeraldLight text-emeraldRich border border-emeraldRich/20">
-                            0 rekod
+                            0 senarai
                         </span>
                     </div>
 
@@ -233,7 +242,7 @@
                             class="w-full pl-11 pr-10 py-3.5 bg-creamBase border-2 border-emeraldRich/30 focus:border-emeraldRich focus:bg-white rounded-xl text-base text-gray-900 placeholder-gray-400 focus:outline-none transition"
                             autocomplete="off"
                         >
-                        <button type="button" id="clear-search-btn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-700">
+                        <button type="button" id="clear-search-btn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-700 cursor-pointer">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </button>
                     </div>
@@ -273,10 +282,10 @@
                     </div>
 
                     <div class="pt-2 flex flex-wrap gap-3">
-                        <button type="button" onclick="clearSelectedPerson()" class="px-4 py-2.5 rounded-xl bg-emeraldDeep text-white text-sm font-semibold hover:bg-emeraldRich transition">
+                        <button type="button" onclick="clearSelectedPerson()" class="px-4 py-2.5 rounded-xl bg-emeraldDeep text-white text-sm font-semibold hover:bg-emeraldRich transition cursor-pointer">
                             <i class="fa-solid fa-magnifying-glass mr-1.5"></i> Kembali ke Senarai Nama
                         </button>
-                        <button type="button" onclick="backToCategorySelection()" class="px-4 py-2.5 rounded-xl bg-white border border-gray-300 text-gray-700 text-sm font-semibold hover:bg-gray-50 transition">
+                        <button type="button" onclick="backToCategorySelection()" class="px-4 py-2.5 rounded-xl bg-white border border-gray-300 text-gray-700 text-sm font-semibold hover:bg-gray-50 transition cursor-pointer">
                             Tukar Kategori
                         </button>
                     </div>
@@ -290,4 +299,1081 @@
                         <div id="selected-person-summary" class="space-y-1 min-w-0 flex-grow">
                             <!-- Dijana oleh JS -->
                         </div>
-                        <button type="button" onclick="clearSelectedPerson()" class="text-xs font-bold text-emeraldRich hover:underline shrink-0 bg-white px-3 py-1.5 rounde
+                        <button type="button" onclick="clearSelectedPerson()" class="text-xs font-bold text-emeraldRich hover:underline shrink-0 bg-white px-3 py-1.5 rounded-lg border border-emeraldRich/20 shadow-sm cursor-pointer">
+                            Tukar Nama
+                        </button>
+                    </div>
+
+                    <!-- Medan Khas Kategori Ibu Bapa / Penjaga -->
+                    <div id="parent-name-field-group" class="hidden space-y-2">
+                        <label for="parent-guardian-name" class="block text-sm sm:text-base font-bold text-emeraldDeep">
+                            Nama Penuh Ibu Bapa / Penjaga Yang Hadir <span class="text-red-600">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="parent-guardian-name" 
+                            placeholder="Contoh: Ahmad Bin Abdullah" 
+                            class="w-full px-4 py-3.5 bg-creamBase border-2 border-gray-300 focus:border-emeraldRich focus:bg-white rounded-xl text-base text-gray-900 focus:outline-none transition"
+                        >
+                        <p class="text-xs text-gray-500">
+                            Nota: Sila masukkan nama ibu bapa atau penjaga yang mewakili penerima anugerah.
+                        </p>
+                    </div>
+
+                    <!-- Pilihan Status Kehadiran (HADIR / TIDAK HADIR) -->
+                    <div class="space-y-2.5">
+                        <label class="block text-sm sm:text-base font-bold text-emeraldDeep">
+                            Status Kehadiran ke Majlis <span class="text-red-600">*</span>
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            <!-- Pilihan HADIR -->
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="attendance_status" value="HADIR" class="peer sr-only" required>
+                                <div class="p-4 rounded-xl border-2 border-gray-200 bg-white peer-checked:border-emeraldRich peer-checked:bg-emeraldLight transition flex items-center gap-3.5 shadow-sm">
+                                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emeraldRich flex items-center justify-center text-lg shrink-0">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                    <div>
+                                        <span class="block font-extrabold text-emeraldDeep text-base">HADIR</span>
+                                        <span class="block text-xs text-gray-500">Saya mengesahkan kehadiran</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <!-- Pilihan TIDAK HADIR -->
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="attendance_status" value="TIDAK HADIR" class="peer sr-only" required>
+                                <div class="p-4 rounded-xl border-2 border-gray-200 bg-white peer-checked:border-red-600 peer-checked:bg-red-50 transition flex items-center gap-3.5 shadow-sm">
+                                    <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-lg shrink-0">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                    </div>
+                                    <div>
+                                        <span class="block font-extrabold text-gray-900 text-base">TIDAK HADIR</span>
+                                        <span class="block text-xs text-gray-500">Maaf, tidak dapat hadir</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Mesej Ralat Borang -->
+                    <div id="form-error-box" class="hidden p-3.5 rounded-xl bg-red-50 border border-red-300 text-red-800 text-sm font-medium flex items-center gap-2.5">
+                        <i class="fa-solid fa-triangle-exclamation text-red-600"></i>
+                        <span id="form-error-text"></span>
+                    </div>
+
+                    <!-- Butang Hantar Pengesahan -->
+                    <div class="pt-2">
+                        <button type="submit" class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-emeraldDeep to-emeraldRich hover:from-emeraldRich hover:to-emeraldDeep text-white font-extrabold text-base sm:text-lg shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2.5 border border-goldPrimary/50 cursor-pointer">
+                            <i class="fa-solid fa-paper-plane text-goldLight"></i>
+                            <span>HANTAR PENGESAHAN</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Paparan Pengesahan Berjaya -->
+                <div id="submission-success-card" class="hidden fade-in text-center py-6 px-4 space-y-5">
+                    <div class="w-20 h-20 rounded-full bg-emeraldLight border-4 border-emeraldRich text-emeraldRich flex items-center justify-center text-4xl mx-auto shadow-md">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="space-y-1.5">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-goldLight text-emeraldDeep">
+                            SIMULASI PENGESAHAN BERJAYA
+                        </span>
+                        <h3 class="font-serif text-2xl sm:text-3xl font-extrabold text-emeraldDeep">
+                            Terima Kasih! Pengesahan Direkodkan
+                        </h3>
+                        <p class="text-sm text-gray-600 max-w-md mx-auto">
+                            Maklum balas kehadiran anda telah direkodkan dalam memori sesi demonstrasi sistem ini.
+                        </p>
+                    </div>
+
+                    <!-- Slip Ringkasan Pengesahan -->
+                    <div id="success-receipt-box" class="max-w-md mx-auto bg-creamBase border-2 border-goldPrimary/60 rounded-2xl p-5 text-left space-y-2.5 text-sm shadow-sm">
+                        <!-- Dijana oleh JS -->
+                    </div>
+
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 max-w-md mx-auto text-xs text-amber-900">
+                        <i class="fa-solid fa-circle-info mr-1"></i>
+                        <strong>Nota Fasa Pembangunan:</strong> Rekod ini disimpan secara sementara dalam sesi pelayar demonstrasi dan belum dihantar ke Google Sheets sebenar.
+                    </div>
+
+                    <div class="pt-2 flex flex-wrap justify-center gap-3">
+                        <button type="button" onclick="backToCategorySelection()" class="px-6 py-3 rounded-xl bg-emeraldDeep text-white font-bold text-sm hover:bg-emeraldRich transition shadow cursor-pointer">
+                            <i class="fa-solid fa-house mr-1.5"></i> Kembali ke Pilihan Kategori
+                        </button>
+                        <button type="button" onclick="navigateTo('urussetia')" class="px-6 py-3 rounded-xl bg-white border-2 border-emeraldDeep text-emeraldDeep font-bold text-sm hover:bg-emeraldLight transition cursor-pointer">
+                            <i class="fa-solid fa-chart-pie mr-1.5"></i> Lihat Dashboard Urus Setia
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- HALAMAN 2 & 3: DASHBOARD PENGURUSAN (URUS SETIA & ADMIN)              -->
+        <!-- ===================================================================== -->
+        <section id="view-dashboard" class="hidden fade-in space-y-6">
+            
+            <!-- Header Dashboard -->
+            <div class="bg-emeraldDeep text-white rounded-2xl p-6 sm:p-7 shadow-lg border-b-4 border-goldPrimary flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span id="dashboard-role-badge" class="px-2.5 py-0.5 rounded text-xs font-extrabold bg-goldPrimary text-emeraldDeep uppercase tracking-wider">
+                            URUS SETIA
+                        </span>
+                        <span class="text-xs text-goldLight font-medium">• DATA DEMONSTRASI</span>
+                    </div>
+                    <h1 id="dashboard-title" class="font-serif text-2xl sm:text-3xl font-extrabold">
+                        Dashboard Pemantauan Urus Setia
+                    </h1>
+                    <p id="dashboard-subtitle" class="text-xs sm:text-sm text-emerald-100 mt-1">
+                        Pantauan masa nyata statistik kehadiran dan senarai tetamu Majlis Citra Gemilang 2026.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="navigateTo('portal')" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold border border-white/20 transition flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-arrow-left"></i> Ke Portal RSVP
+                    </button>
+                    <button type="button" id="btn-reset-demo" onclick="confirmResetDemo()" class="hidden px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-2 shadow cursor-pointer">
+                        <i class="fa-solid fa-rotate-left"></i> Set Semula Data Demo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Kad Statistik Utama (4 Kad) -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Jumlah Jemputan -->
+                <div class="bg-white rounded-2xl p-5 tropical-card-shadow border-l-4 border-emeraldDeep">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Jumlah Jemputan</span>
+                        <div class="w-9 h-9 rounded-lg bg-emeraldLight text-emeraldDeep flex items-center justify-center">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                    </div>
+                    <p id="stat-total" class="text-3xl font-extrabold text-emeraldDeep mt-2">0</p>
+                    <span class="text-xs text-gray-400">Rekod demonstrasi</span>
+                </div>
+
+                <!-- Jumlah Hadir -->
+                <div class="bg-white rounded-2xl p-5 tropical-card-shadow border-l-4 border-emerald-600">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Jumlah Hadir</span>
+                        <div class="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                    </div>
+                    <p id="stat-hadir" class="text-3xl font-extrabold text-emerald-700 mt-2">0</p>
+                    <span id="stat-hadir-pct" class="text-xs font-semibold text-emerald-600">0% daripada jemputan</span>
+                </div>
+
+                <!-- Jumlah Tidak Hadir -->
+                <div class="bg-white rounded-2xl p-5 tropical-card-shadow border-l-4 border-red-500">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Tidak Hadir</span>
+                        <div class="w-9 h-9 rounded-lg bg-red-100 text-red-600 flex items-center justify-center">
+                            <i class="fa-solid fa-user-xmark"></i>
+                        </div>
+                    </div>
+                    <p id="stat-tidakhadir" class="text-3xl font-extrabold text-red-600 mt-2">0</p>
+                    <span id="stat-tidakhadir-pct" class="text-xs font-semibold text-red-500">0% daripada jemputan</span>
+                </div>
+
+                <!-- Belum Memberi Respons -->
+                <div class="bg-white rounded-2xl p-5 tropical-card-shadow border-l-4 border-goldPrimary">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Belum Respons</span>
+                        <div class="w-9 h-9 rounded-lg bg-amber-100 text-goldDark flex items-center justify-center">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                    </div>
+                    <p id="stat-belum" class="text-3xl font-extrabold text-goldDark mt-2">0</p>
+                    <span id="stat-belum-pct" class="text-xs font-semibold text-amber-700">Menunggu pengesahan</span>
+                </div>
+            </div>
+
+            <!-- Pecahan Mengikut Kategori -->
+            <div class="bg-white rounded-2xl p-6 tropical-card-shadow border border-gray-200">
+                <h2 class="text-base sm:text-lg font-extrabold text-emeraldDeep mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-goldPrimary"></i>
+                    Pecahan Kehadiran Mengikut Kategori (Data Demonstrasi)
+                </h2>
+                <div id="category-breakdown-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Dijana oleh JS -->
+                </div>
+            </div>
+
+            <!-- Panel Khas Admin: Struktur Pangkalan Data Google Sheets -->
+            <div id="admin-db-architecture-panel" class="hidden bg-creamBase rounded-2xl p-6 border-2 border-goldPrimary space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-goldPrimary/30 pb-3">
+                    <div>
+                        <span class="text-xs font-extrabold text-goldDark uppercase tracking-wider">Konfigurasi Integrasi Fasa 2</span>
+                        <h3 class="text-lg font-extrabold text-emeraldDeep flex items-center gap-2">
+                            <i class="fa-solid fa-table text-emeraldRich"></i>
+                            Skema Pangkalan Data Google Sheets & Apps Script
+                        </h3>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                        <i class="fa-solid fa-plug-circle-exclamation"></i> Status: Sedia Untuk Sambungan API
+                    </span>
+                </div>
+
+                <p class="text-xs sm:text-sm text-gray-700">
+                    Struktur kod aplikasi ini telah dibina selari dengan empat (4) helaian utama (<em>sheets</em>) dalam Google Sheets bagi memudahkan sambungan Web App Google Apps Script pada fasa seterusnya:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                    <div class="bg-white p-3.5 rounded-xl border border-gray-200">
+                        <div class="font-extrabold text-emeraldDeep flex items-center justify-between mb-1">
+                            <span>1. Helaian: TETAMU</span>
+                            <span class="text-[11px] bg-emeraldLight text-emeraldRich px-2 py-0.5 rounded">Master Data</span>
+                        </div>
+                        <code class="text-gray-600 block break-words">ID_Jemputan | Kategori | Nama_Jemputan | Jawatan_Kelas | Status_Aktif</code>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-gray-200">
+                        <div class="font-extrabold text-emeraldDeep flex items-center justify-between mb-1">
+                            <span>2. Helaian: RESPONS</span>
+                            <span class="text-[11px] bg-emeraldLight text-emeraldRich px-2 py-0.5 rounded">Transaksi RSVP</span>
+                        </div>
+                        <code class="text-gray-600 block break-words">ID_Respons | ID_Jemputan | Nama_Hadir_Penjaga | Status_Kehadiran | Cap_Masa</code>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-gray-200">
+                        <div class="font-extrabold text-emeraldDeep flex items-center justify-between mb-1">
+                            <span>3. Helaian: PENGGUNA</span>
+                            <span class="text-[11px] bg-emeraldLight text-emeraldRich px-2 py-0.5 rounded">Akses Kawalan</span>
+                        </div>
+                        <code class="text-gray-600 block break-words">ID_Pengguna | Nama_Pegawai | Emel | Peranan (Admin / Urus_Setia)</code>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-gray-200">
+                        <div class="font-extrabold text-emeraldDeep flex items-center justify-between mb-1">
+                            <span>4. Helaian: TETAPAN</span>
+                            <span class="text-[11px] bg-emeraldLight text-emeraldRich px-2 py-0.5 rounded">Konfigurasi</span>
+                        </div>
+                        <code class="text-gray-600 block break-words">Kunci_Tetapan | Nilai_Tetapan (Nama_Majlis, Tarikh, Status_Portal)</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Senarai Nama dan Status Kehadiran -->
+            <div class="bg-white rounded-2xl p-6 tropical-card-shadow border border-gray-200 space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-base sm:text-lg font-extrabold text-emeraldDeep">
+                            Senarai Jemputan & Status Kehadiran
+                        </h2>
+                        <p class="text-xs text-gray-500">Paparan rekod contoh (DATA DEMONSTRASI) mengikut carian dan penapis.</p>
+                    </div>
+
+                    <!-- Penapis Jadual -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <input 
+                            type="text" 
+                            id="dash-search-input" 
+                            oninput="renderDashboardTable()" 
+                            placeholder="Cari nama / ID..." 
+                            class="px-3.5 py-2 bg-creamBase border border-gray-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-emeraldRich"
+                        >
+                        <select id="dash-filter-category" onchange="renderDashboardTable()" class="px-3 py-2 bg-creamBase border border-gray-300 rounded-xl text-xs sm:text-sm font-medium focus:outline-none focus:border-emeraldRich">
+                            <option value="ALL">Semua Kategori</option>
+                            <option value="GURU">Guru</option>
+                            <option value="AKP">AKP</option>
+                            <option value="IBU_BAPA">Ibu Bapa / Penjaga</option>
+                            <option value="VIP">VIP / Jemputan</option>
+                        </select>
+                        <select id="dash-filter-status" onchange="renderDashboardTable()" class="px-3 py-2 bg-creamBase border border-gray-300 rounded-xl text-xs sm:text-sm font-medium focus:outline-none focus:border-emeraldRich">
+                            <option value="ALL">Semua Status</option>
+                            <option value="HADIR">Hadir</option>
+                            <option value="TIDAK HADIR">Tidak Hadir</option>
+                            <option value="BELUM">Belum Respons</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Jadual Responsif -->
+                <div class="overflow-x-auto rounded-xl border border-gray-200">
+                    <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                        <thead>
+                            <tr class="bg-emeraldDeep text-white">
+                                <th class="py-3 px-4 font-bold">ID Unik</th>
+                                <th class="py-3 px-4 font-bold">Kategori</th>
+                                <th class="py-3 px-4 font-bold">Nama Jemputan / Murid</th>
+                                <th class="py-3 px-4 font-bold">Butiran / Wakil Hadir</th>
+                                <th class="py-3 px-4 font-bold">Status</th>
+                                <th class="py-3 px-4 font-bold">Masa Rekod</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboard-table-body" class="divide-y divide-gray-100">
+                            <!-- Dijana oleh JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL PENGESAHAN SET SEMULA DATA DEMO -->
+    <div id="reset-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border-2 border-goldPrimary space-y-4 fade-in">
+            <div class="flex items-center gap-3 text-amber-700">
+                <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </div>
+                <h3 class="text-lg font-extrabold text-emeraldDeep">Set Semula Data Demonstrasi?</h3>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed">
+                Tindakan ini akan mengembalikan semua rekod ujian kepada keadaan asal demonstrasi. Adakah anda ingin meneruskan?
+            </p>
+            <div class="flex justify-end gap-3 pt-2">
+                <button type="button" onclick="closeResetModal()" class="px-4 py-2 rounded-xl border border-gray-300 text-gray-700 text-sm font-semibold hover:bg-gray-100 cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" onclick="executeResetDemo()" class="px-4 py-2 rounded-xl bg-emeraldDeep text-white text-sm font-semibold hover:bg-emeraldRich cursor-pointer">
+                    Ya, Set Semula
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER RASMI -->
+    <footer class="bg-emeraldDeep text-creamBase/80 border-t-2 border-goldPrimary mt-12">
+        <div class="max-w-6xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div class="text-center sm:text-left">
+                <p class="font-bold text-white text-sm">Sekolah Kebangsaan Tanjung Batu</p>
+                <p class="text-goldLight mt-0.5">Majlis Citra Gemilang 2026</p>
+            </div>
+            <div class="text-center sm:text-right text-creamBase/70">
+                <p>Sistem RSVP Digital (Prototaip Interaktif & Data Demonstrasi)</p>
+                <p class="mt-0.5">Sedia untuk Integrasi Google Apps Script & Google Sheets</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIK APLIKASI & DATA DEMONSTRASI -->
+    <script>
+        /**
+         * STRUKTUR DATA DEMONSTRASI (SELARI DENGAN SKEMA GOOGLE SHEETS)
+         * Helaian: TETAMU, RESPONS, PENGGUNA, TETAPAN
+         * Nota: Semua nama di bawah adalah DATA DEMONSTRASI untuk tujuan pengujian.
+         */
+        const INITIAL_DEMO_DATA = {
+            tetapan: {
+                nama_majlis: "Majlis Citra Gemilang SK Tanjung Batu 2026",
+                tarikh_majlis: "25 November 2026",
+                mod_sistem: "DATA DEMONSTRASI"
+            },
+            // Helaian: TETAMU (Setiap jemputan mempunyai ID unik)
+            tetamu: [
+                // Kategori A: GURU
+                { id: "GRU-001", kategori: "GURU", nama: "Cikgu Ahmad Zaki Bin Ismail", info: "Guru Penolong Kanan Pentadbiran" },
+                { id: "GRU-002", kategori: "GURU", nama: "Cikgu Noraini Binti Hassan", info: "Guru Penolong Kanan HEM" },
+                { id: "GRU-003", kategori: "GURU", nama: "Cikgu Siti Sarah Binti Mahmud", info: "Guru Penyelaras Tahun 6" },
+                { id: "GRU-004", kategori: "GURU", nama: "Cikgu Mohd Hafiz Bin Rahman", info: "Guru Bimbingan & Kaunseling" },
+                { id: "GRU-005", kategori: "GURU", nama: "Cikgu Nurul Izzah Binti Kamarudin", info: "Guru Media & Perpustakaan" },
+
+                // Kategori B: AKP
+                { id: "AKP-001", kategori: "AKP", nama: "Puan Rohana Binti Yusof", info: "Ketua Pembantu Tadbir" },
+                { id: "AKP-002", kategori: "AKP", nama: "Encik Azman Bin Sulaiman", info: "Pembantu Operasi" },
+                { id: "AKP-003", kategori: "AKP", nama: "Puan Faridah Binti Omar", info: "Pembantu Pengurusan Murid (PPM)" },
+                { id: "AKP-004", kategori: "AKP", nama: "Encik Khairul Nizam Bin Bakar", info: "Juruteknik Komputer" },
+
+                // Kategori C: IBU BAPA / PENJAGA PENERIMA ANUGERAH (Nama Murid & Kelas)
+                { id: "IBP-001", kategori: "IBU_BAPA", nama: "Muhammad Aiman Dani Bin Razak", info: "Kelas: 6 Cemerlang (Anugerah Tokoh Murid)" },
+                { id: "IBP-002", kategori: "IBU_BAPA", nama: "Nur Aisyah Humaira Binti Zulkifli", info: "Kelas: 6 Cemerlang (Anugerah Akademik Terbaik)" },
+                { id: "IBP-003", kategori: "IBU_BAPA", nama: "Adam Harith Bin Mohd Faizal", info: "Kelas: 5 Bestari (Anugerah Kokurikulum)" },
+                { id: "IBP-004", kategori: "IBU_BAPA", nama: "Puteri Balqis Binti Shamsul", info: "Kelas: 4 Gemilang (Anugerah Sahsiah Terpuji)" },
+                { id: "IBP-005", kategori: "IBU_BAPA", nama: "Daniel Hakim Bin Roslan", info: "Kelas: 3 Bijak (Anugerah Lonjakan Saujana)" },
+                { id: "IBP-006", kategori: "IBU_BAPA", nama: "Siti Khadijah Binti Abdullah", info: "Kelas: 2 Dedikasi (Anugerah Nilam)" },
+
+                // Kategori D: VIP / TETAMU JEMPUTAN
+                { id: "VIP-001", kategori: "VIP", nama: "YB Dato' Sri Haji Mustafa Bin Ali", info: "Perasmi Majlis" },
+                { id: "VIP-002", kategori: "VIP", nama: "Tuan Haji Kamarulzaman Bin Osman", info: "Pegawai Pendidikan Daerah" },
+                { id: "VIP-003", kategori: "VIP", nama: "Encik Wan Mohd Ridzuan Bin Wan Ahmad", info: "Yang Dipertua PIBG SK Tanjung Batu" },
+                { id: "VIP-004", kategori: "VIP", nama: "Puan Hajah Salmah Binti Ibrahim", info: "Penghulu Mukim Tanjung Batu" }
+            ],
+            // Helaian: RESPONS (Contoh awal beberapa rekod yang sudah memberi respons)
+            respons: [
+                {
+                    id_respons: "RSP-DEMO-01",
+                    id_jemputan: "GRU-001",
+                    nama_wakil: "Cikgu Ahmad Zaki Bin Ismail",
+                    status: "HADIR",
+                    cap_masa: "20 Nov 2026, 09:15 PG"
+                },
+                {
+                    id_respons: "RSP-DEMO-02",
+                    id_jemputan: "IBP-001",
+                    nama_wakil: "Encik Razak Bin Othman (Bapa)",
+                    status: "HADIR",
+                    cap_masa: "20 Nov 2026, 10:42 PG"
+                },
+                {
+                    id_respons: "RSP-DEMO-03",
+                    id_jemputan: "AKP-002",
+                    nama_wakil: "Encik Azman Bin Sulaiman",
+                    status: "TIDAK HADIR",
+                    cap_masa: "20 Nov 2026, 02:18 PTG"
+                }
+            ]
+        };
+
+        // State Aplikasi dalam Memori
+        let appState = JSON.parse(JSON.stringify(INITIAL_DEMO_DATA));
+        let currentView = 'portal'; // 'portal' | 'urussetia' | 'admin'
+        let selectedCategory = null;
+        let selectedGuest = null;
+
+        const CATEGORY_META = {
+            GURU: {
+                title: "Kategori A: Guru",
+                searchLabel: "Cari Nama Guru:",
+                placeholder: "Taip nama guru (cth: Ahmad, Noraini, Siti)..."
+            },
+            AKP: {
+                title: "Kategori B: Anggota Kumpulan Pelaksana (AKP)",
+                searchLabel: "Cari Nama Staf AKP:",
+                placeholder: "Taip nama staf AKP (cth: Rohana, Azman, Faridah)..."
+            },
+            IBU_BAPA: {
+                title: "Kategori C: Ibu Bapa / Penjaga Penerima Anugerah",
+                searchLabel: "Cari Nama Murid Penerima Anugerah:",
+                placeholder: "Taip nama murid penerima anugerah (cth: Aiman, Aisyah, Adam)..."
+            },
+            VIP: {
+                title: "Kategori D: VIP / Tetamu Jemputan",
+                searchLabel: "Cari Nama Tetamu Jemputan / VIP:",
+                placeholder: "Taip nama VIP / jemputan (cth: Mustafa, Kamarulzaman, Wan)..."
+            }
+        };
+
+        /**
+         * Navigasi antara Portal Tetamu, Urus Setia, dan Admin
+         */
+        window.navigateTo = function(view) {
+            currentView = view;
+
+            // Kemas kini gaya butang navigasi
+            ['portal', 'urussetia', 'admin'].forEach(function(tab) {
+                const btn = document.getElementById('nav-' + tab);
+                if (!btn) return;
+                if (tab === view) {
+                    btn.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 bg-goldPrimary text-emeraldDeep shadow cursor-pointer';
+                } else {
+                    btn.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 text-creamBase hover:bg-white/10 cursor-pointer';
+                }
+            });
+
+            const portalSection = document.getElementById('view-portal');
+            const dashboardSection = document.getElementById('view-dashboard');
+
+            if (view === 'portal') {
+                portalSection.classList.remove('hidden');
+                dashboardSection.classList.add('hidden');
+                if (window.location.hash && window.location.hash !== '#portal') {
+                    history.replaceState(null, '', '#portal');
+                }
+            } else {
+                portalSection.classList.add('hidden');
+                dashboardSection.classList.remove('hidden');
+                setupDashboardView(view);
+                if (window.location.hash !== '#' + view) {
+                    history.replaceState(null, '', '#' + view);
+                }
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        /**
+         * Membuka Halaman Seterusnya Bagi Kategori Yang Dipilih (Dipanggil SEKALI per klik)
+         */
+        window.openCategoryPage = function(categoryKey) {
+            if (!CATEGORY_META[categoryKey]) return;
+
+            selectedCategory = categoryKey;
+            selectedGuest = null;
+
+            // Pastikan paparan portal aktif
+            const portalSection = document.getElementById('view-portal');
+            const dashboardSection = document.getElementById('view-dashboard');
+            portalSection.classList.remove('hidden');
+            dashboardSection.classList.add('hidden');
+
+            // Sembunyikan halaman pilihan kategori & paparkan halaman kategori terpilih
+            const categorySection = document.getElementById('category-selection-section');
+            const workspace = document.getElementById('rsvp-workspace');
+
+            categorySection.classList.add('hidden');
+            workspace.classList.remove('hidden');
+
+            // Tetapkan tajuk dan label carian mengikut kategori
+            const meta = CATEGORY_META[categoryKey];
+            document.getElementById('selected-category-title').textContent = meta.title;
+            document.getElementById('search-label').textContent = meta.searchLabel;
+
+            const searchInput = document.getElementById('guest-search-input');
+            searchInput.placeholder = meta.placeholder;
+            searchInput.value = '';
+
+            // Pastikan hanya bahagian carian & senarai tetamu dipaparkan dahulu
+            document.getElementById('search-step').classList.remove('hidden');
+            document.getElementById('already-responded-card').classList.add('hidden');
+            document.getElementById('rsvp-confirm-form').classList.add('hidden');
+            document.getElementById('submission-success-card').classList.add('hidden');
+            document.getElementById('clear-search-btn').classList.add('hidden');
+
+            // Kemas kini hash URL supaya butang Back pelayar telefon berfungsi dengan betul
+            if (window.location.hash !== '#kategori-' + categoryKey) {
+                history.pushState({ category: categoryKey }, '', '#kategori-' + categoryKey);
+            }
+
+            // Jana serta-merta senarai nama tetamu kategori tersebut tanpa perlu menaip
+            renderSearchResults('');
+
+            // Tatal perlahan ke bahagian ruang kerja supaya terus jelas pada telefon
+            setTimeout(function() {
+                workspace.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+        };
+
+        /**
+         * Kembali ke Halaman Pilihan Kategori
+         */
+        window.backToCategorySelection = function() {
+            selectedCategory = null;
+            selectedGuest = null;
+
+            const categorySection = document.getElementById('category-selection-section');
+            const workspace = document.getElementById('rsvp-workspace');
+
+            workspace.classList.add('hidden');
+            categorySection.classList.remove('hidden');
+
+            if (window.location.hash.startsWith('#kategori-')) {
+                history.replaceState(null, '', '#portal');
+            }
+
+            categorySection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        };
+
+        /**
+         * Pengendalian Carian Nama
+         */
+        window.handleSearchInput = function() {
+            const query = document.getElementById('guest-search-input').value;
+            const clearBtn = document.getElementById('clear-search-btn');
+            if (query.trim().length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+            renderSearchResults(query);
+        };
+
+        window.clearSearch = function() {
+            const searchInput = document.getElementById('guest-search-input');
+            searchInput.value = '';
+            document.getElementById('clear-search-btn').classList.add('hidden');
+            renderSearchResults('');
+            searchInput.focus();
+        };
+
+        function renderSearchResults(query) {
+            const container = document.getElementById('search-results-container');
+            const countBadge = document.getElementById('guest-count-badge');
+            const cleanQuery = query.trim().toLowerCase();
+
+            // Tapis senarai tetamu mengikut kategori yang dipilih dan kata kunci carian
+            const matches = appState.tetamu.filter(function(item) {
+                if (item.kategori !== selectedCategory) return false;
+                if (!cleanQuery) return true;
+                return item.nama.toLowerCase().includes(cleanQuery) || 
+                       item.info.toLowerCase().includes(cleanQuery) ||
+                       item.id.toLowerCase().includes(cleanQuery);
+            });
+
+            if (countBadge) {
+                countBadge.textContent = matches.length + ' senarai';
+            }
+
+            if (matches.length === 0) {
+                container.innerHTML = `
+                    <div class="p-6 text-center text-gray-500 text-sm">
+                        <i class="fa-regular fa-face-frown text-2xl text-gray-400 mb-2 block"></i>
+                        Tiada rekod demonstrasi ditemui bagi carian "<strong>${escapeHTML(query)}</strong>".
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = matches.map(function(person) {
+                const existingResp = appState.respons.find(function(r) { return r.id_jemputan === person.id; });
+                const statusBadge = existingResp 
+                    ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${existingResp.status === 'HADIR' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}">
+                         <i class="fa-solid fa-check-double"></i> ${existingResp.status}
+                       </span>`
+                    : `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                         Belum Respons
+                       </span>`;
+
+                return `
+                    <button type="button" onclick="chooseGuest('${person.id}')" class="w-full text-left p-4 hover:bg-emeraldLight/60 transition flex items-center justify-between gap-3 group cursor-pointer">
+                        <div class="min-w-0 flex-grow pointer-events-none">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="text-xs font-mono font-bold text-emeraldRich bg-emeraldLight px-2 py-0.5 rounded">${person.id}</span>
+                                <span class="font-bold text-gray-900 group-hover:text-emeraldDeep text-sm sm:text-base break-words">${person.nama}</span>
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-600 mt-1">${person.info}</p>
+                        </div>
+                        <div class="flex items-center gap-2.5 shrink-0 pointer-events-none">
+                            ${statusBadge}
+                            <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich"></i>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        /**
+         * Memilih Individu daripada Hasil Carian & Menyemak Kawalan Pengesahan Berganda
+         */
+        window.chooseGuest = function(guestId) {
+            const person = appState.tetamu.find(function(t) { return t.id === guestId; });
+            if (!person) return;
+
+            selectedGuest = person;
+            document.getElementById('search-step').classList.add('hidden');
+            document.getElementById('form-error-box').classList.add('hidden');
+
+            // Semak jika ID jemputan ini sudah mempunyai rekod pengesahan aktif
+            const existingResponse = appState.respons.find(function(r) { return r.id_jemputan === person.id; });
+
+            if (existingResponse) {
+                const alreadyCard = document.getElementById('already-responded-card');
+                const detailsBox = document.getElementById('existing-record-details');
+
+                const statusClass = existingResponse.status === 'HADIR' 
+                    ? 'bg-emerald-100 text-emerald-800 border-emerald-300' 
+                    : 'bg-red-100 text-red-800 border-red-300';
+
+                detailsBox.innerHTML = `
+                    <div class="flex justify-between py-1 border-b border-gray-100">
+                        <span class="text-gray-500">ID Jemputan:</span>
+                        <span class="font-mono font-bold text-emeraldDeep">${person.id}</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-gray-100">
+                        <span class="text-gray-500">${person.kategori === 'IBU_BAPA' ? 'Nama Murid:' : 'Nama Jemputan:'}</span>
+                        <span class="font-bold text-gray-900 text-right">${person.nama}</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-gray-100">
+                        <span class="text-gray-500">Butiran:</span>
+                        <span class="text-gray-700 text-right">${person.info}</span>
+                    </div>
+                    ${person.kategori === 'IBU_BAPA' ? `
+                    <div class="flex justify-between py-1 border-b border-gray-100">
+                        <span class="text-gray-500">Ibu Bapa / Penjaga:</span>
+                        <span class="font-bold text-gray-900 text-right">${escapeHTML(existingResponse.nama_wakil)}</span>
+                    </div>` : ''}
+                    <div class="flex justify-between items-center py-1 border-b border-gray-100">
+                        <span class="text-gray-500">Status Direkodkan:</span>
+                        <span class="px-3 py-0.5 rounded-full text-xs font-extrabold border ${statusClass}">${existingResponse.status}</span>
+                    </div>
+                    <div class="flex justify-between py-1">
+                        <span class="text-gray-500">Masa Pengesahan:</span>
+                        <span class="text-gray-700">${existingResponse.cap_masa}</span>
+                    </div>
+                `;
+
+                alreadyCard.classList.remove('hidden');
+                return;
+            }
+
+            // Jika belum memberi respons, sediakan borang pengesahan HADIR / TIDAK HADIR
+            const form = document.getElementById('rsvp-confirm-form');
+            form.reset();
+
+            const summaryBox = document.getElementById('selected-person-summary');
+            const parentFieldGroup = document.getElementById('parent-name-field-group');
+            const parentInput = document.getElementById('parent-guardian-name');
+
+            if (person.kategori === 'IBU_BAPA') {
+                summaryBox.innerHTML = `
+                    <span class="text-xs font-mono font-bold text-emeraldRich bg-white px-2 py-0.5 rounded border border-emeraldRich/20">ID: ${person.id}</span>
+                    <h4 class="text-base sm:text-lg font-extrabold text-emeraldDeep mt-1">${person.nama}</h4>
+                    <p class="text-xs sm:text-sm font-semibold text-goldDark">${person.info}</p>
+                `;
+                parentFieldGroup.classList.remove('hidden');
+                parentInput.required = true;
+            } else {
+                summaryBox.innerHTML = `
+                    <span class="text-xs font-mono font-bold text-emeraldRich bg-white px-2 py-0.5 rounded border border-emeraldRich/20">ID: ${person.id}</span>
+                    <h4 class="text-base sm:text-lg font-extrabold text-emeraldDeep mt-1">${person.nama}</h4>
+                    <p class="text-xs sm:text-sm text-gray-700">${person.info}</p>
+                `;
+                parentFieldGroup.classList.add('hidden');
+                parentInput.required = false;
+            }
+
+            form.classList.remove('hidden');
+        };
+
+        window.clearSelectedPerson = function() {
+            selectedGuest = null;
+            document.getElementById('already-responded-card').classList.add('hidden');
+            document.getElementById('rsvp-confirm-form').classList.add('hidden');
+            document.getElementById('search-step').classList.remove('hidden');
+            renderSearchResults(document.getElementById('guest-search-input').value);
+        };
+
+        /**
+         * Menghantar Borang Pengesahan
+         */
+        window.submitRSVP = function(event) {
+            event.preventDefault();
+            if (!selectedGuest) return;
+
+            const errorBox = document.getElementById('form-error-box');
+            const errorText = document.getElementById('form-error-text');
+            errorBox.classList.add('hidden');
+
+            // Kawalan berganda kali kedua sebelum simpan
+            const doubleCheck = appState.respons.find(function(r) { return r.id_jemputan === selectedGuest.id; });
+            if (doubleCheck) {
+                chooseGuest(selectedGuest.id);
+                return;
+            }
+
+            // Validasi nama ibu bapa/penjaga jika kategori IBU_BAPA
+            let namaWakil = selectedGuest.nama;
+            if (selectedGuest.kategori === 'IBU_BAPA') {
+                const parentVal = document.getElementById('parent-guardian-name').value.trim();
+                if (parentVal.length < 3) {
+                    errorText.textContent = "Sila masukkan nama penuh ibu bapa atau penjaga yang sah.";
+                    errorBox.classList.remove('hidden');
+                    return;
+                }
+                namaWakil = parentVal;
+            }
+
+            // Validasi pilihan radio HADIR / TIDAK HADIR
+            const selectedRadio = document.querySelector('input[name="attendance_status"]:checked');
+            if (!selectedRadio) {
+                errorText.textContent = "Sila pilih status kehadiran anda (HADIR atau TIDAK HADIR).";
+                errorBox.classList.remove('hidden');
+                return;
+            }
+
+            const statusKehadiran = selectedRadio.value;
+            const now = new Date();
+            const formattedTime = now.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' }) + 
+                                  ', ' + now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
+
+            const newRecord = {
+                id_respons: 'RSP-DEMO-' + String(appState.respons.length + 1).padStart(2, '0'),
+                id_jemputan: selectedGuest.id,
+                nama_wakil: namaWakil,
+                status: statusKehadiran,
+                cap_masa: formattedTime
+            };
+
+            // Simpan ke dalam state sesi demonstrasi
+            appState.respons.push(newRecord);
+
+            // Papar slip pengesahan berjaya
+            document.getElementById('rsvp-confirm-form').classList.add('hidden');
+            const successCard = document.getElementById('submission-success-card');
+            const receiptBox = document.getElementById('success-receipt-box');
+
+            const badgeStyle = statusKehadiran === 'HADIR' 
+                ? 'bg-emerald-100 text-emerald-800 border-emerald-300' 
+                : 'bg-red-100 text-red-800 border-red-300';
+
+            receiptBox.innerHTML = `
+                <div class="flex justify-between border-b border-goldPrimary/30 pb-2">
+                    <span class="text-gray-500">No. Rujukan Simulasi:</span>
+                    <span class="font-mono font-bold text-emeraldDeep">${newRecord.id_respons}</span>
+                </div>
+                <div class="flex justify-between border-b border-goldPrimary/30 pb-2">
+                    <span class="text-gray-500">ID Jemputan:</span>
+                    <span class="font-mono font-bold text-gray-800">${selectedGuest.id}</span>
+                </div>
+                <div class="flex justify-between border-b border-goldPrimary/30 pb-2">
+                    <span class="text-gray-500">${selectedGuest.kategori === 'IBU_BAPA' ? 'Murid Penerima:' : 'Nama Jemputan:'}</span>
+                    <span class="font-bold text-gray-900 text-right">${selectedGuest.nama}</span>
+                </div>
+                ${selectedGuest.kategori === 'IBU_BAPA' ? `
+                <div class="flex justify-between border-b border-goldPrimary/30 pb-2">
+                    <span class="text-gray-500">Ibu Bapa / Penjaga:</span>
+                    <span class="font-bold text-emeraldDeep text-right">${escapeHTML(namaWakil)}</span>
+                </div>` : ''}
+                <div class="flex justify-between items-center border-b border-goldPrimary/30 pb-2">
+                    <span class="text-gray-500">Status Kehadiran:</span>
+                    <span class="px-3 py-0.5 rounded-full text-xs font-extrabold border ${badgeStyle}">${statusKehadiran}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Cap Masa:</span>
+                    <span class="text-gray-700">${formattedTime}</span>
+                </div>
+            `;
+
+            successCard.classList.remove('hidden');
+        };
+
+        /**
+         * DASHBOARD PENGURUSAN: ADMIN & URUS SETIA
+         */
+        function setupDashboardView(role) {
+            const badge = document.getElementById('dashboard-role-badge');
+            const title = document.getElementById('dashboard-title');
+            const subtitle = document.getElementById('dashboard-subtitle');
+            const adminDbPanel = document.getElementById('admin-db-architecture-panel');
+            const resetDemoBtn = document.getElementById('btn-reset-demo');
+
+            if (role === 'admin') {
+                badge.textContent = "PENTADBIR SISTEM (ADMIN)";
+                title.textContent = "Dashboard Pentadbir Sistem";
+                subtitle.textContent = "Kawalan penuh statistik kehadiran, struktur helaian pangkalan data, dan simulasi rekod.";
+                adminDbPanel.classList.remove('hidden');
+                resetDemoBtn.classList.remove('hidden');
+            } else {
+                badge.textContent = "JAWATANKUASA URUS SETIA";
+                title.textContent = "Dashboard Pemantauan Urus Setia";
+                subtitle.textContent = "Semakan status kehadiran tetamu dan pecahan kategori Majlis Citra Gemilang 2026.";
+                adminDbPanel.classList.add('hidden');
+                resetDemoBtn.classList.add('hidden');
+            }
+
+            updateDashboardStats();
+            renderDashboardTable();
+        }
+
+        function updateDashboardStats() {
+            const total = appState.tetamu.length;
+            let hadir = 0;
+            let tidakHadir = 0;
+
+            appState.respons.forEach(function(r) {
+                if (r.status === 'HADIR') hadir++;
+                else if (r.status === 'TIDAK HADIR') tidakHadir++;
+            });
+
+            const belum = total - (hadir + tidakHadir);
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-hadir').textContent = hadir;
+            document.getElementById('stat-tidakhadir').textContent = tidakHadir;
+            document.getElementById('stat-belum').textContent = belum;
+
+            document.getElementById('stat-hadir-pct').textContent = (total ? Math.round((hadir / total) * 100) : 0) + '% daripada jemputan';
+            document.getElementById('stat-tidakhadir-pct').textContent = (total ? Math.round((tidakHadir / total) * 100) : 0) + '% daripada jemputan';
+            document.getElementById('stat-belum-pct').textContent = (total ? Math.round((belum / total) * 100) : 0) + '% menunggu respons';
+
+            // Pecahan mengikut kategori
+            const categories = [
+                { key: 'GURU', label: 'A. Guru', icon: 'fa-chalkboard-user' },
+                { key: 'AKP', label: 'B. AKP', icon: 'fa-users-gear' },
+                { key: 'IBU_BAPA', label: 'C. Ibu Bapa / Penjaga', icon: 'fa-award' },
+                { key: 'VIP', label: 'D. VIP / Jemputan', icon: 'fa-crown' }
+            ];
+
+            const breakdownContainer = document.getElementById('category-breakdown-grid');
+            breakdownContainer.innerHTML = categories.map(function(cat) {
+                const catGuests = appState.tetamu.filter(function(t) { return t.kategori === cat.key; });
+                const catIds = catGuests.map(function(g) { return g.id; });
+                const catResponses = appState.respons.filter(function(r) { return catIds.includes(r.id_jemputan); });
+
+                const cHadir = catResponses.filter(function(r) { return r.status === 'HADIR'; }).length;
+                const cTidak = catResponses.filter(function(r) { return r.status === 'TIDAK HADIR'; }).length;
+                const cBelum = catGuests.length - (cHadir + cTidak);
+
+                return `
+                    <div class="bg-creamBase rounded-xl p-4 border border-goldPrimary/30 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-extrabold text-emeraldDeep text-sm flex items-center gap-2">
+                                <i class="fa-solid ${cat.icon} text-goldDark"></i> ${cat.label}
+                            </span>
+                            <span class="text-xs font-bold bg-white px-2 py-0.5 rounded border border-gray-200">
+                                Jumlah: ${catGuests.length}
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-1.5 text-center text-xs pt-1">
+                            <div class="bg-emerald-100/80 text-emerald-900 rounded-lg p-1.5">
+                                <span class="block font-extrabold text-sm">${cHadir}</span>
+                                <span class="text-[11px]">Hadir</span>
+                            </div>
+                            <div class="bg-red-100/80 text-red-900 rounded-lg p-1.5">
+                                <span class="block font-extrabold text-sm">${cTidak}</span>
+                                <span class="text-[11px]">Tidak</span>
+                            </div>
+                            <div class="bg-amber-100/80 text-amber-900 rounded-lg p-1.5">
+                                <span class="block font-extrabold text-sm">${cBelum}</span>
+                                <span class="text-[11px]">Belum</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.renderDashboardTable = function() {
+            const searchQ = document.getElementById('dash-search-input').value.trim().toLowerCase();
+            const catFilter = document.getElementById('dash-filter-category').value;
+            const statusFilter = document.getElementById('dash-filter-status').value;
+
+            const tbody = document.getElementById('dashboard-table-body');
+
+            const rows = appState.tetamu.filter(function(guest) {
+                const resp = appState.respons.find(function(r) { return r.id_jemputan === guest.id; });
+                const statusVal = resp ? resp.status : 'BELUM';
+
+                if (catFilter !== 'ALL' && guest.kategori !== catFilter) return false;
+                if (statusFilter !== 'ALL' && statusVal !== statusFilter) return false;
+
+                if (searchQ) {
+                    const wakilText = resp ? resp.nama_wakil.toLowerCase() : '';
+                    return guest.nama.toLowerCase().includes(searchQ) ||
+                           guest.id.toLowerCase().includes(searchQ) ||
+                           guest.info.toLowerCase().includes(searchQ) ||
+                           wakilText.includes(searchQ);
+                }
+                return true;
+            });
+
+            if (rows.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-gray-500">
+                            Tiada rekod demonstrasi sepadan dengan penapis yang dipilih.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            const catShortName = {
+                GURU: 'Guru',
+                AKP: 'AKP',
+                IBU_BAPA: 'Ibu Bapa / Penjaga',
+                VIP: 'VIP / Jemputan'
+            };
+
+            tbody.innerHTML = rows.map(function(guest) {
+                const resp = appState.respons.find(function(r) { return r.id_jemputan === guest.id; });
+                
+                let statusBadge = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">Belum Respons</span>`;
+                if (resp) {
+                    statusBadge = resp.status === 'HADIR'
+                        ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800"><i class="fa-solid fa-check"></i> HADIR</span>`
+                        : `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-red-100 text-red-800"><i class="fa-solid fa-xmark"></i> TIDAK HADIR</span>`;
+                }
+
+                const wakilInfo = (guest.kategori === 'IBU_BAPA' && resp)
+                    ? `<span class="block text-xs font-bold text-emeraldDeep mt-0.5">Wakil: ${escapeHTML(resp.nama_wakil)}</span>`
+                    : '';
+
+                return `
+                    <tr class="hover:bg-creamBase/70 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-xs text-emeraldRich whitespace-nowrap">${guest.id}</td>
+                        <td class="py-3 px-4 whitespace-nowrap font-medium text-gray-700">${catShortName[guest.kategori]}</td>
+                        <td class="py-3 px-4 font-bold text-gray-900">${guest.nama}</td>
+                        <td class="py-3 px-4 text-gray-600">
+                            <span>${guest.info}</span>
+                            ${wakilInfo}
+                        </td>
+                        <td class="py-3 px-4 whitespace-nowrap">${statusBadge}</td>
+                        <td class="py-3 px-4 whitespace-nowrap text-xs text-gray-500">${resp ? resp.cap_masa : '-'}</td>
+                    </tr>
+                `;
+            }).join('');
+        };
+
+        /**
+         * Kawalan Modal Set Semula Data Demonstrasi
+         */
+        window.confirmResetDemo = function() {
+            document.getElementById('reset-modal').classList.remove('hidden');
+        };
+
+        window.closeResetModal = function() {
+            document.getElementById('reset-modal').classList.add('hidden');
+        };
+
+        window.executeResetDemo = function() {
+            appState = JSON.parse(JSON.stringify(INITIAL_DEMO_DATA));
+            closeResetModal();
+            updateDashboardStats();
+            renderDashboardTable();
+        };
+
+        /**
+         * Utiliti keselamatan paparan teks input pengguna
+         */
+        function escapeHTML(str) {
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        /**
+         * Pengikatan Acara Tunggal & Sokongan Butang Back Pelayar GitHub Pages
+         */
+        function initPortalEvents() {
+            // Gunakan delegasi klik tunggal pada kontena kad kategori (elak panggilan berganda)
+            const categorySection = document.getElementById('category-selection-section');
+            if (categorySection) {
+                categorySection.addEventListener('click', function(e) {
+                    const card = e.target.closest('.cat-card[data-category]');
+                    if (!card) return;
+                    e.preventDefault();
+                    const cat = card.getAttribute('data-category');
+                    if (cat) {
+                        window.openCategoryPage(cat);
+                    }
+                });
+            }
+
+            // Kendali perubahan hash / butang Back pada pelayar telefon
+            window.addEventListener('popstate', function() {
+                const hash = window.location.hash;
+                if (hash.startsWith('#kategori-')) {
+                    const cat = hash.replace('#kategori-', '');
+                    if (CATEGORY_META[cat]) {
+                        window.openCategoryPage(cat);
+                    }
+                } else if (hash === '#urussetia' || hash === '#admin') {
+                    window.navigateTo(hash.replace('#', ''));
+                } else {
+                    window.navigateTo('portal');
+                    window.backToCategorySelection();
+                }
+            });
+
+            // Semak jika halaman dibuka terus dengan hash tertentu
+            const initialHash = window.location.hash;
+            if (initialHash === '#urussetia' || initialHash === '#admin') {
+                window.navigateTo(initialHash.replace('#', ''));
+            } else if (initialHash.startsWith('#kategori-')) {
+                const cat = initialHash.replace('#kategori-', '');
+                if (CATEGORY_META[cat]) {
+                    window.openCategoryPage(cat);
+                } else {
+                    window.navigateTo('portal');
+                }
+            } else {
+                window.navigateTo('portal');
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPortalEvents);
+        } else {
+            initPortalEvents();
+        }
+    </script>
+</body>
+</html>
