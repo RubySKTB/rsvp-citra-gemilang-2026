@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem RSVP Digital - Majlis Citra Gemilang SK Tanjung Batu 2026</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emeraldDeep: '#043927',    /* Hijau Hutan Gelap */
+                        emeraldRich: '#065f46',    /* Hijau Zamrud */
+                        emeraldLight: '#ecfdf5',   /* Hijau Lembut Latar */
+                        creamBase: '#fdfbf7',      /* Krim Utama */
+                        creamDark: '#f5efe6',      /* Krim Sekunder */
+                        goldPrimary: '#c59b27',    /* Emas Utama */
+                        goldLight: '#f3e5ab',      /* Emas Cair */
+                        goldDark: '#9a7414',       /* Emas Gelap */
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdfbf7;
+            color: #1f2937;
+            background-image: radial-gradient(#065f4612 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .gold-border-gradient {
+            border: 2px solid transparent;
+            background: linear-gradient(#ffffff, #ffffff) padding-box,
+                        linear-gradient(135deg, #c59b27, #f3e5ab, #9a7414) border-box;
+        }
+        .tropical-card-shadow {
+            box-shadow: 0 10px 30px -5px rgba(4, 57, 39, 0.08), 0 4px 12px -2px rgba(197, 155, 39, 0.08);
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5efe6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #065f46;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-emeraldRich selection:text-white">
+
+    <!-- PENANDA DATA DEMONSTRASI -->
+    <div class="bg-amber-900 text-amber-50 text-xs sm:text-sm py-2 px-4 text-center font-medium tracking-wide border-b border-goldPrimary shadow-sm sticky top-0 z-50">
+        <i class="fa-solid fa-flask-vial mr-1.5 text-goldLight"></i>
+        <strong>MOD SIMULASI & DATA DEMONSTRASI:</strong> Rekod di dalam sistem ini adalah contoh ujian semata-mata dan belum disambungkan ke Google Sheets sebenar.
+    </div>
+
+    <!-- BAR NAVIGASI UTAMA -->
+    <nav class="bg-emeraldDeep text-white shadow-md border-b-2 border-goldPrimary">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <button type="button" onclick="navigateTo('portal')" class="flex items-center gap-2.5 text-left focus:outline-none group">
+                <div class="w-9 h-9 rounded-lg bg-goldPrimary/20 border border-goldPrimary flex items-center justify-center text-goldLight group-hover:bg-goldPrimary group-hover:text-emeraldDeep transition">
+                    <i class="fa-solid fa-leaf text-lg"></i>
+                </div>
+                <div>
+                    <span class="block text-xs text-goldLight uppercase tracking-wider font-semibold">SK Tanjung Batu</span>
+                    <span class="block text-sm sm:text-base font-bold leading-tight">Sistem RSVP Digital 2026</span>
+                </div>
+            </button>
+
+            <!-- Butang Navigasi Mod -->
+            <div class="flex items-center gap-2 bg-black/25 p-1 rounded-xl border border-emeraldRich">
+                <button type="button" id="nav-portal" onclick="navigateTo('portal')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 bg-goldPrimary text-emeraldDeep shadow">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Portal Tetamu</span>
+                </button>
+                <button type="button" id="nav-urussetia" onclick="navigateTo('urussetia')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 text-creamBase hover:bg-white/10">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    <span>Urus Setia</span>
+                </button>
+                <button type="button" id="nav-admin" onclick="navigateTo('admin')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 text-creamBase hover:bg-white/10">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Admin</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- KANDUNGAN UTAMA -->
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-6 sm:py-8">
+
+        <!-- ===================================================================== -->
+        <!-- HALAMAN 1: PORTAL PENGESAHAN KEHADIRAN TETAMU (HALAMAN UTAMA)         -->
+        <!-- ===================================================================== -->
+        <section id="view-portal" class="fade-in space-y-6">
+            
+            <!-- BANNER RASMI DI BAHAGIAN PALING ATAS HALAMAN UTAMA (bannerrsvp.png) -->
+            <div id="banner-wrapper" class="w-full rounded-2xl overflow-hidden shadow-xl border-2 border-goldPrimary bg-emeraldDeep">
+                <img 
+                    id="official-banner-img"
+                    src="bannerrsvp.png" 
+                    alt="Banner Rasmi Majlis Citra Gemilang SK Tanjung Batu 2026" 
+                    style="width: 100%; height: auto; object-fit: contain; display: block;"
+                >
+            </div>
+
+            <!-- LANGKAH 1: PILIHAN KATEGORI TETAMU (4 KAD PILIHAN) -->
+            <div id="category-selection-section" class="space-y-4 fade-in">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <h2 class="text-base sm:text-xl font-bold text-emeraldDeep flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-full bg-emeraldDeep text-goldLight text-xs flex items-center justify-center font-extrabold shrink-0">1</span>
+                        <span>Pilih Kategori Tetamu</span>
+                    </h2>
+                    <span class="text-xs font-medium text-gray-500">Sila klik satu kategori untuk meneruskan</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+                    <!-- Kad A: GURU -->
+                    <button type="button" onclick="openCategoryPage('GURU')" id="cat-card-GURU" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-emeraldDeep text-goldLight flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <span class="text-[11px] sm:text-xs font-bold text-goldDark uppercase tracking-wider block">Kategori A</span>
+                            <h3 class="text-sm sm:text-lg font-extrabold text-emeraldDeep mt-0.5 leading-snug break-words">GURU</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">Barisan pendidik SK Tanjung Batu.</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0"></i>
+                    </button>
+
+                    <!-- Kad B: AKP -->
+                    <button type="button" onclick="openCategoryPage('AKP')" id="cat-card-AKP" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-emeraldRich text-goldLight flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition">
+                            <i class="fa-solid fa-users-gear"></i>
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <span class="text-[11px] sm:text-xs font-bold text-goldDark uppercase tracking-wider block">Kategori B</span>
+                            <h3 class="text-sm sm:text-lg font-extrabold text-emeraldDeep mt-0.5 leading-snug break-words">ANGGOTA KUMPULAN PELAKSANA (AKP)</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">Staf sokongan dan kakitangan sekolah.</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0"></i>
+                    </button>
+
+                    <!-- Kad C: IBU BAPA / PENJAGA -->
+                    <button type="button" onclick="openCategoryPage('IBU_BAPA')" id="cat-card-IBU_BAPA" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-goldPrimary text-emeraldDeep flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <span class="text-[11px] sm:text-xs font-bold text-goldDark uppercase tracking-wider block">Kategori C</span>
+                            <h3 class="text-sm sm:text-lg font-extrabold text-emeraldDeep mt-0.5 leading-snug break-words">IBU BAPA / PENJAGA PENERIMA ANUGERAH</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">Carian berdasarkan nama murid penerima anugerah.</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0"></i>
+                    </button>
+
+                    <!-- Kad D: VIP / TETAMU JEMPUTAN -->
+                    <button type="button" onclick="openCategoryPage('VIP')" id="cat-card-VIP" class="cat-card w-full text-left bg-white hover:bg-emeraldLight/50 p-4 sm:p-5 rounded-2xl border-2 border-gray-200 hover:border-emeraldRich transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-3.5 sm:gap-4 group cursor-pointer">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-emeraldDeep border border-goldPrimary text-goldLight flex items-center justify-center text-lg sm:text-xl shrink-0 group-hover:scale-105 transition">
+                            <i class="fa-solid fa-crown"></i>
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <span class="text-[11px] sm:text-xs font-bold text-goldDark uppercase tracking-wider block">Kategori D</span>
+                            <h3 class="text-sm sm:text-lg font-extrabold text-emeraldDeep mt-0.5 leading-snug break-words">VIP / TETAMU JEMPUTAN</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">Tetamu kehormat, PIBG dan jemputan khas.</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emeraldRich shrink-0"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- LANGKAH 2: HALAMAN CARIAN & BORANG PENGESAHAN KATEGORI TERPILIH -->
+            <div id="rsvp-workspace" class="hidden fade-in bg-white rounded-2xl p-5 sm:p-8 tropical-card-shadow gold-border-gradient space-y-6">
+                
+                <!-- Header Modul Terpilih & Butang Kembali ke Pilihan Kategori -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-200">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-full bg-emeraldDeep text-goldLight text-xs flex items-center justify-center font-extrabold shrink-0">2</span>
+                        <div>
+                            <span class="text-xs font-bold text-goldDark uppercase block">Kategori Dipilih</span>
+                            <h3 id="selected-category-title" class="text-base sm:text-xl font-extrabold text-emeraldDeep leading-tight"></h3>
+                        </div>
+                    </div>
+                    <button type="button" onclick="backToCategorySelection()" class="text-xs sm:text-sm font-bold text-emeraldDeep hover:text-white bg-emeraldLight hover:bg-emeraldDeep border border-emeraldRich/30 px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-xs">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Kembali ke Pilihan Kategori</span>
+                    </button>
+                </div>
+
+                <!-- Langkah Carian & Senarai Nama Tetamu -->
+                <div id="search-step" class="space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <label for="guest-search-input" id="search-label" class="block text-sm sm:text-base font-bold text-gray-800">
+                            Cari Nama:
+                        </label>
+                        <span id="guest-count-badge" class="text-xs font-bold px-2.5 py-1 rounded-full bg-emeraldLight text-emeraldRich border border-emeraldRich/20">
+                            0 rekod
+                        </span>
+                    </div>
+
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-emeraldRich">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="guest-search-input" 
+                            oninput="handleSearchInput()"
+                            placeholder="Taip nama untuk menapis senarai..." 
+                            class="w-full pl-11 pr-10 py-3.5 bg-creamBase border-2 border-emeraldRich/30 focus:border-emeraldRich focus:bg-white rounded-xl text-base text-gray-900 placeholder-gray-400 focus:outline-none transition"
+                            autocomplete="off"
+                        >
+                        <button type="button" id="clear-search-btn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-700">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </div>
+
+                    <p class="text-xs text-gray-500 flex items-center gap-1.5">
+                        <i class="fa-solid fa-hand-pointer text-goldDark"></i>
+                        <span>Sila pilih dan klik nama daripada senarai <strong>DATA DEMONSTRASI</strong> di bawah untuk mengesahkan kehadiran.</span>
+                    </p>
+
+                    <!-- Senarai Hasil Carian -->
+                    <div id="search-results-container" class="mt-2 max-h-80 overflow-y-auto divide-y divide-gray-100 border-2 border-gray-200 rounded-xl bg-white shadow-inner">
+                        <!-- Hasil carian dijana oleh JS -->
+                    </div>
+                </div>
+
+                <!-- Paparan Status Sedia Ada (Kawalan Penghantaran Berganda) -->
+                <div id="already-responded-card" class="hidden fade-in bg-creamBase border-2 border-goldPrimary rounded-2xl p-5 sm:p-6 space-y-4">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-goldPrimary/20 text-goldDark flex items-center justify-center text-2xl shrink-0">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <span class="inline-block px-2.5 py-0.5 rounded-md text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                                PENGESAHAN TELAH DIREKODKAN
+                            </span>
+                            <h4 class="text-lg sm:text-xl font-extrabold text-emeraldDeep">
+                                Maklum Balas Sedia Ada Ditemui
+                            </h4>
+                            <p class="text-sm text-gray-600">
+                                Rekod jemputan ini telah pun menghantar pengesahan kehadiran. Bagi menjaga integriti data, penghantaran respons berganda tidak dibenarkan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="existing-record-details" class="bg-white rounded-xl p-4 border border-gray-200 space-y-2 text-sm">
+                        <!-- Butiran rekod sedia ada dijana oleh JS -->
+                    </div>
+
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button type="button" onclick="clearSelectedPerson()" class="px-4 py-2.5 rounded-xl bg-emeraldDeep text-white text-sm font-semibold hover:bg-emeraldRich transition">
+                            <i class="fa-solid fa-magnifying-glass mr-1.5"></i> Kembali ke Senarai Nama
+                        </button>
+                        <button type="button" onclick="backToCategorySelection()" class="px-4 py-2.5 rounded-xl bg-white border border-gray-300 text-gray-700 text-sm font-semibold hover:bg-gray-50 transition">
+                            Tukar Kategori
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Borang Pengesahan Kehadiran Aktif -->
+                <form id="rsvp-confirm-form" onsubmit="submitRSVP(event)" class="hidden fade-in space-y-5 pt-2">
+                    
+                    <!-- Kad Maklumat Terpilih -->
+                    <div class="bg-emeraldLight/70 border border-emeraldRich/30 rounded-xl p-4 sm:p-5 flex flex-wrap items-start justify-between gap-4">
+                        <div id="selected-person-summary" class="space-y-1 min-w-0 flex-grow">
+                            <!-- Dijana oleh JS -->
+                        </div>
+                        <button type="button" onclick="clearSelectedPerson()" class="text-xs font-bold text-emeraldRich hover:underline shrink-0 bg-white px-3 py-1.5 rounde
